@@ -96,48 +96,26 @@ describe 'have_tag inner expectations' do
     end
   end
 
-  it "should only match against a single element at a time when nesting expectations (see RSpec LH#316)" do
-    html = <<-EOHTML
-      <ul>
-        <li>
-          <a href="1">1</a>
-        </li>
-        <li>
-          <a href="2">2</a>
-          <span>Hello</span>
-        </li>
-      </ul>
-    EOHTML
-
-    html.should have_tag('li', :count => 1) do |li|
-      li.should have_tag('a')
-      li.should have_tag('span')
-    end
-
-    html.should have_tag('li', :count => 1) do |li|
-      li.should have_tag('a')
-      li.should_not have_tag('span')
-    end
-
-    html.should have_tag('li', :count => 2) do |li|
-      li.should have_tag('a')
-    end
-  end
-
   it "should yield elements which respond to #body" do
     @html.should have_tag('ul') do |ul|
       ul.should respond_to(:body)
     end
   end
 
-  it "should supports arbitrary expectations within the block" do
-    html = %q{<span class="sha1">cbc0bd52f99fe19304bccad383694e92b8ee2c71</span>}
-    html.should have_tag('span.sha1') do |span|
-      span.inner_text.length.should == 40
-    end
-    html.should_not have_tag('span.sha1') do |span|
-      span.inner_text.length.should == 41
-    end
+  it "should throw a separate exception for inner expectations to inner_text" do
+    lambda {
+      @html.should have_tag('ul') do |ul|
+        ul.inner_text.should include('asdfasdfasdf')
+      end
+    }.should raise_error(SpecFailed, /to include "asdfasdfasdf"/)
+  end
+
+  it "should throw a separate exception for inner expectations to have_tag" do
+    lambda {
+      @html.should have_tag('ul') do |ul|
+        ul.should have_tag('div')
+      end
+    }.should raise_error(SpecFailed, /an element matching "div"/)
   end
 
   it "should include a description of the inner expectation in the failure message" do

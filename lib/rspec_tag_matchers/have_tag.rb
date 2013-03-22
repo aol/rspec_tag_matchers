@@ -26,9 +26,7 @@ module RspecTagMatchers
         matched_elements = filter_on_inner_text(matched_elements)
       end
 
-      if block
-        matched_elements = filter_on_nested_expectations(matched_elements, block)
-      end
+      filter_on_nested_expectations(matched_elements, block) if block
 
       @actual_count = matched_elements.length
       return false if not acceptable_count?(@actual_count)
@@ -66,13 +64,7 @@ module RspecTagMatchers
 
       def filter_on_nested_expectations(elements, block)
         elements.select do |el|
-          begin
-            block.call(el)
-          rescue RSpec::Expectations::ExpectationNotMetError
-            false
-          else
-            true
-          end
+          block.call(el)
         end
       end
 

@@ -1,7 +1,7 @@
 PATH
   remote: ../rspec_tag_matchers
   specs:
-    rspec_tag_matchers (1.0.0)
+    rspec_tag_matchers (1.1.0)
       nokogiri (>= 1.4.0)
 
 GEM
