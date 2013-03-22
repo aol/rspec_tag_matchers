@@ -41,19 +41,5 @@ Gem::Specification.new do |s|
      "spec/spec_helper.rb"
   ]
 
-  if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 3
-
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<nokogiri>, [">= 1.4.0"])
-      s.add_runtime_dependency(%q<rspec-rails>, [">= 1.2.6"])
-    else
-      s.add_dependency(%q<nokogiri>, [">= 1.4.0"])
-      s.add_dependency(%q<rspec-rails>, [">= 1.2.6"])
-    end
-  else
-    s.add_dependency(%q<nokogiri>, [">= 1.4.0"])
-    s.add_dependency(%q<rspec-rails>, [">= 1.2.6"])
-  end
+  s.add_runtime_dependency "nokogiri", ">= 1.4.0"
 end

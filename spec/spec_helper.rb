@@ -1,11 +1,15 @@
 # coding: utf-8
 $: << File.join(File.dirname(__FILE__), *%w[.. lib])
+
+require 'rspec/expectations'
 require 'rspec_tag_matchers'
 
-Spec::Runner.configure do |config|
+unless defined?(SpecFailed)
+  SpecFailed = RSpec::Expectations::ExpectationNotMetError
+end
+
+RSpec.configure do |config|
   config.include(RspecTagMatchers)
 end
 
-unless defined?(SpecFailed)
-  SpecFailed = Spec::Expectations::ExpectationNotMetError
-end
+

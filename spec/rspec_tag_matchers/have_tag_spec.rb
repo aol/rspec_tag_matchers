@@ -197,7 +197,7 @@ describe 'have_tag with counts' do
   it "should include the actual number of elements matched in the failure message" do
     lambda {
       @html.should have_tag('li', :count => 3)
-    }.should raise_error(SpecFailed, /found 4/)
+      }.should raise_error(SpecFailed, /found 4/)
     lambda {
       @html.should have_tag('li', :count => 5)
     }.should raise_error(SpecFailed, /found 4/)
